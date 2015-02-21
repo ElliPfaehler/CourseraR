@@ -1,33 +1,51 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+##this function creates a special matrix, which is a list of functions
 
 makeCacheMatrix <- function(x = matrix()) {
-  m<-NULL
+  ##set inverse to null
+  inv<-NULL
+
+  ##the set function sets the value of the vector x to a certain vector
+  ##sets the inverse to NULL	
   set<-function(y){
   x<<-y
-  m<<-NULL
-}
-get<-function() x
-setmatrix<-function(solve) m<<- solve
-getmatrix<-function() m
-list(set=set, get=get,
+  inv<<-NULL
+  }
+
+  ##the get function returns x
+  get<-function() x
+
+  ##setmatrix sets inverse to the inverse value
+  setmatrix<-function(solve) inv<<- solve
+
+  ##getmatrix returns inverse
+  getmatrix<-function() inv
+
+   ##return value of the function makeCacheMatrix
+   list(set=set, get=get,
    setmatrix=setmatrix,
    getmatrix=getmatrix)
 }
 
 
-## Write a short comment describing this function
+##This function is calculating the inverse of a matrix
+##It checks before calculating if the inverse has already been calculated
+##if its already been calculated it returns the value of the inverse which was stored before
+##if it hasnt been calculated it calculates the inverse with the solve-function
 
 cacheSolve <- function(x=matrix(), ...) {
-    m<-x$getmatrix()
-    if(!is.null(m)){
+    ##checks if inverse is already calculated and cached
+    inv<-x$getmatrix()
+    ##if its cached return the cached value	
+    if(!is.null(inv)){
       message("getting cached data")
-      return(m)
+      return(inv)
     }
+    ##if not calculated, get the matrix
     matrix<-x$get()
-    m<-solve(matrix, ...)
-    x$setmatrix(m)
-    m
+    ##calculate the inverse of a matrix
+    inv<-solve(matrix, ...)
+    ##store the inverse in cache
+    x$setmatrix(inv)
+    ##return inverse
+    inv
 }
